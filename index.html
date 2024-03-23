@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Management Application</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Custom CSS */
+    .task-container {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mt-5">Task Management Application</h1>
+    <div class="row task-container">
+        <div class="col-md-8">
+            <input type="text" id="task-title" class="form-control mb-2" placeholder="Task Title">
+            <textarea id="task-description" class="form-control mb-2" placeholder="Task Description"></textarea>
+            <input type="date" id="task-due-date" class="form-control mb-2">
+            <select id="task-priority" class="form-control mb-2">
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
+            <button id="add-task-btn" class="btn btn-primary btn-block">Add Task</button>
+        </div>
+    </div>
+    <div class="row task-container">
+        <div class="col-md-8">
+            <h2>Tasks</h2>
+            <ul id="task-list" class="list-group">
+                <!-- Task items will be added here dynamically -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#add-task-btn").click(function(){
+            var title = $("#task-title").val();
+            var description = $("#task-description").val();
+            var dueDate = $("#task-due-date").val();
+            var priority = $("#task-priority").val();
+
+            if(title !== ""){
+                var taskItem = "<li class='list-group-item'><strong>Title:</strong> " + title + "<br><strong>Description:</strong> " + description + "<br><strong>Due Date:</strong> " + dueDate + "<br><strong>Priority:</strong> " + priority + "<button class='btn btn-danger btn-sm float-right delete-task'>Delete</button></li>";
+                $("#task-list").append(taskItem);
+                // Clear input fields after adding task
+                $("#task-title").val("");
+                $("#task-description").val("");
+                $("#task-due-date").val("");
+                $("#task-priority").val("low");
+            } else {
+                alert("Please enter a task title.");
+            }
+        });
+
+        // Delete task
+        $(document).on("click", ".delete-task", function(){
+            $(this).parent().remove();
+        });
+    });
+</script>
+
+</body>
+</html>
